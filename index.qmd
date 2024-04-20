@@ -1,0 +1,160 @@
+---
+title: "Linux Foundation OSS Summit 2024 Takeaways"
+format: revealjs
+---
+## Linux Foundation OSS Summit Takeaways {auto-animate="true"}
+
+![](LF-Event-Logo-_OSS-NA-V-White-01-1.png){style="margin-left: auto; background: navy; margin-right: auto; width: 29%"}
+
+::: {.incremental .fig-right}
+Seattle, April 16 - 18 2024<br />
+:::
+
+## Don't let the foundation fool you
+
+Although it was organized by the "Linux Foundation", subject matter was
+not just about Linux.
+
+## 14+ sessions {auto-animate="true"}
+
+### Very diverse subject matter
+
+- Adding custom programs to the kernel with eBPF
+- OSS Data Science for the Environment
+- Securing Software Supply Chain
+- How Open-Source projects get funded
+
+**Goal today**: Just awareness of trends & tech we don't already discuss
+
+## eBPF 
+
+::: incremental
+-   Means for mere mortals to safely inject programs into unpatched kernels
+
+-   These programs are basically like event handlers: triggered when something happens on your machine
+
+-   With some exceptions, programs can't change behavior, only react to it
+
+-   Commonly have a kernel-space part written in C and a user-space part written in whatever
+
+-   Possible use case: log OOMs affecting less than whole container to customers
+:::
+
+## WASM in kubernetes
+
+::: incremental
+-   A much faster to start & more lightweight way to sandbox
+
+-   Community focus mostly on lambda-esque model, though they claim faster activations
+
+-   Full k8s integration + developer tooling is by [Fermyon](https://fermyon.com/spin)
+
+-   Core FOSS component is [containerd/runwasi](https://github.com/containerd/runwasi)
+
+-   Individual WASM activations seem to bypass all of k8s control plane incl. scheduling
+    - So it's a sorta-k8s integration
+:::
+
+## Supply Chain Security Things
+
+::: incremental
+-   Most activity due to the Linux Foundation spinning up The [Open Source Security Foundation](https://openssf.org)
+
+-   Has an adoption problem / too new still to be found on your average PyPI package
+
+-   Promises a future where reputable dependencies include machine-readable attestations
+    of their security posture and CI pipelines produce reports on how much risk your dep
+    choices hypothetically add.
+
+-   While I recognize the problem, strikes me as a bit hand-wavy due to the light coupling
+    between attestations and actual security of the code.
+:::
+
+## Multi-Tenant Observability
+
+An SRE going over what they did as a case study
+
+::: incremental
+-   Main takeaway: [Kyverno](https://kyverno.io/) probably generally useful k8s resource wrangler
+
+-   Metrics: spun separate Prometheus instances per tenant, prolly not best for us
+
+-   Logs: Used fluentbit operator to live-patch fluentbit config as tenants appeared
+
+-   Traces: Used discrete OpenTelementry and Jaeger instances per tenant
+:::
+
+## EROFS
+
+Enhanced Read-Only filesystem
+
+::: incremental
+-   Mostly Alibaba Cloud currently funding / maintaining
+
+-   Alibaba is engaged in the image pull problem and is building on EROFS to solve it
+    - As is [Dragonfly Nydus](https://github.com/dragonflyoss/nydus), which isn't at Alibaba
+
+-   EROFS "supports" 3 separate ways to perform filesystem overlays without even using overlayfs.
+    - Actual tooling to build such EROFS devices / images not widely available, but some variants
+      look achievable to recreate.
+:::
+
+## Do you CDEvents 👀?
+
+::: incremental
+-   A standard + concrete bindings and SDKs to make CI & CD event based
+
+-   Idea is that you could have different repo vendors, different CI workflow systems, and different deployment systems,
+    but be able to standardize some concerns like notifications, signing, metrics, policy enforcement. 
+
+-   Probably more applicable to larger teams / orgs that use many repo vendors, CI systems, etc. and have a centralized
+    EngOps team
+:::
+
+[https://cdevents.dev/](https://cdevents.dev/)
+
+## Open Source Funding
+
+A cool idea: [The FOSS Contributor Fund](https://github.com/indeedeng/foss-contributor-fund)
+
+>   "Making it weird __not__ to fund FOSS"
+
+::: incremental
+-   Companies create a fund to support open-source projects.
+    - Management determines bottom line available for all FOSS support
+    - Which projects? Employees vote.
+    - Funds are split evenly among selected projects.
+:::
+
+Resources & template at [https://fossfunders.com/](https://fossfunders.com/)
+
+## AllenAI's Open Language Model
+
+::: incremental
+
+-   An LLM being developed in the open in every respect, holding its own with
+    proprietary models
+
+-   The curious can study the stages of making these things
+    - Presenter was top notch, left with a better understanding of
+      the real substantive work going on in the oft-hyped AI space
+    - Check the [LF YouTube Channel](https://www.youtube.com/@LinuxfoundationOrg/videos) for the keynote video
+
+-   Related, the UAE has made $300M available to OSS AI training
+:::
+
+[https://allenai.org/olmo](https://allenai.org/olmo)
+
+## Random takeaways you only get in person...
+
+::: incremental
+-   The diversity landscape was amazing
+    - But some of these kids make me feel old 😂
+
+-   The Linux Foundation is freaking massive
+    - Sufficient funding and employees to set policy on appropriate use of
+      the branding of the sub-foundations
+    - Also has a learning and certifications arm covering Linux and beyond
+
+-   These Linux people are all on Macbooks?!? 🤔
+:::
